@@ -253,57 +253,32 @@ def perform_function(feature):
     if feature in functions:
         functions[feature]()
 
-# Function to display the copyright notice (non-visible, but accessible for inspection)
-def display_copyright():
-    copyright_label = tk.Label(root, text="Andrew Ransome 2024 ©", font=("Helvetica", 8), fg="white", bg="#f0f8ff")
-    copyright_label.place(x=-1000, y=-1000)  # Place the label out of view
-
-# Main UI window
+# Set up GUI
 root = tk.Tk()
-root.title("Enhanced Voice Assistant")
-root.geometry("500x700")
-root.configure(bg="#f0f8ff")
+root.title("Cool AI Desktop Helper")
+root.geometry("800x600")
 
-# Chat window setup
-chat_box = tk.Text(root, width=50, height=10, font=("Helvetica", 12), bd=2, wrap=tk.WORD)
-chat_box.pack(pady=10)
+# Load and set background image
+bg_image = Image.open("E:/py/Grand AI/Cool AI desktop helper.jpeg")  # Correct path for .jpeg file
+bg_image = bg_image.resize((800, 600), Image.Resampling.LANCZOS)
+bg_image = ImageTk.PhotoImage(bg_image)
 
-# Try loading the background image
-try:
-    background_image = Image.open("E:/cool matrix.jpg")  # Adjusted path
-    background_image = background_image.resize((500, 500))  # Resize to fit the window
-    bg_photo = ImageTk.PhotoImage(background_image)
-    bg_label = tk.Label(root, image=bg_photo)
-    bg_label.place(relwidth=1, relheight=1)  # Place image on the background
-except FileNotFoundError:
-    print("Background image not found, using default background.")
-    root.config(bg="lightblue")  # Default background color if image is not found
+bg_label = tk.Label(root, image=bg_image)
+bg_label.place(relwidth=1, relheight=1)
 
-button_frame = tk.Frame(root, bg="white", bd=5)
-button_frame.place(relx=0.5, rely=0.6, anchor="n", relwidth=0.9)
+# Entry box for text input
+text_entry = tk.Entry(root, width=60, font=("Helvetica", 14))
+text_entry.pack(pady=10)
 
-# Entry for user input
-text_entry = tk.Entry(root, width=50, font=("Helvetica", 12), bd=2)
-text_entry.pack(pady=5)
+# Submit button to handle user input
+submit_button = tk.Button(root, text="Submit", command=handle_user_input, font=("Helvetica", 12))
+submit_button.pack(pady=5)
 
-# Buttons for each action
-buttons = [
-    ("Submit", handle_user_input),
-    ("Voice Input", start_voice_input),
-    ("Features", list_features),
-    ("Monitor System", monitor_system),
-    ("Task Manager", open_task_manager),
-    ("Google News API Key", input_google_api_key),
-    ("OpenAI API Key", input_openai_api_key),
-    ("Donate", lambda: webbrowser.open("https://www.paypal.me/ARansome63"))
-]
+# Frame for dynamic buttons
+button_frame = tk.Frame(root)
+button_frame.pack(pady=10)
 
-# Add buttons to the main window
-for i, (text, command) in enumerate(buttons):
-    tk.Button(root, text=text, command=command, width=30, height=2, 
-              font=("Helvetica", 12, "bold"), bg="lightgreen").pack(pady=5)
-
-# Call the display_copyright function after your main GUI setup
-display_copyright()
+list_features()
 
 root.mainloop()
+
