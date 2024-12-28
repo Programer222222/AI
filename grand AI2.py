@@ -253,6 +253,10 @@ def perform_function(feature):
     if feature in functions:
         functions[feature]()
 
+# Function to open PayPal link
+def open_paypal():
+    webbrowser.open("https://www.paypal.com/paypalme/ARansome63")
+
 # Set up GUI
 root = tk.Tk()
 root.title("Cool AI Desktop Helper")
@@ -273,6 +277,10 @@ text_entry.pack(pady=10)
 # Submit button to handle user input
 submit_button = tk.Button(root, text="Submit", command=handle_user_input, font=("Helvetica", 12))
 submit_button.pack(pady=5)
+
+# PayPal donation button
+paypal_button = tk.Button(root, text="Donate via PayPal", command=open_paypal, font=("Helvetica", 12), bg="green", fg="white")
+paypal_button.pack(pady=20)
 
 # Frame for dynamic buttons
 button_frame = tk.Frame(root)
